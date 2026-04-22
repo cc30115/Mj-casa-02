@@ -5,17 +5,18 @@ interface IntroLoaderProps {
 }
 
 const PREVIEW_IMAGES = [
-  '/assets/hero-small/12.jpeg',
-  '/assets/hero-small/19.jpeg',
+  '/assets/hero-small/12.jpeg', // top right - 200%
+  '/assets/hero-small/19.jpeg', // bottom left - 150%
+  '/assets/hero-small/6.jpeg',  // center right huge - 300%
 ];
 
 export default function IntroLoader({ onComplete }: IntroLoaderProps) {
   const [progress, setProgress] = useState(0);
   const [step, setStep] = useState(0);
-  // step 0 = loading bar filling
-  // step 1 = cards + tagline appear
-  // step 2 = brand text slides up from bottom
-  // step 3 = exit (curtain lifts)
+  // step 0 = loading bar
+  // step 1 = cards + tagline
+  // step 2 = brand wordmark
+  // step 3 = exit
   const rafRef = useRef<number | null>(null);
   const startRef = useRef<number | null>(null);
   const DURATION = 4000;
@@ -32,11 +33,10 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         rafRef.current = requestAnimationFrame(animate);
       } else {
         setProgress(100);
-        // sequence of reveals
         setTimeout(() => setStep(1), 400);   // cards fade in
-        setTimeout(() => setStep(2), 1000);  // big brand text slides up
+        setTimeout(() => setStep(2), 1000);  // big brand text
         setTimeout(() => setStep(3), 3000);  // exit (curtain lift)
-        setTimeout(onComplete, 4200);        // wait for 1.2s transition
+        setTimeout(onComplete, 4200);        
       }
     };
     rafRef.current = requestAnimationFrame(animate);
@@ -51,178 +51,105 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         position: 'fixed',
         inset: 0,
         zIndex: 9999,
-        background: '#EDE8E1',          // warm off-white like reference
+        background: '#EDE8E1',
         overflow: 'hidden',
         pointerEvents: 'all',
-        // curtain lifts up on exit
         transform: exiting ? 'translateY(-100%)' : 'translateY(0)',
-        transition: exiting
-          ? 'transform 1.2s cubic-bezier(0.76,0,0.24,1)'
-          : 'none',
+        transition: exiting ? 'transform 1.2s cubic-bezier(0.76,0,0.24,1)' : 'none',
       }}
     >
-      {/* ─── Top bar: progress ─── */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: '2px',
-        background: 'rgba(0,0,0,0.08)',
-      }}>
-        <div style={{
-          height: '100%',
-          width: `${progress}%`,
-          background: '#1A1613',
-          transition: 'width 0.08s linear',
-        }} />
+      {/* ─── Top progress bar ─── */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: 'rgba(0,0,0,0.08)' }}>
+        <div style={{ height: '100%', width: `${progress}%`, background: '#1A1613', transition: 'width 0.08s linear' }} />
       </div>
 
-      {/* ─── Logo top-left ─── */}
+      {/* ─── Nav placeholders ─── */}
       <div style={{
-        position: 'absolute',
-        top: '32px',
-        left: '48px',
-        fontFamily: 'Cabinet Grotesk, system-ui, sans-serif',
-        fontSize: '13px',
-        letterSpacing: '0.06em',
-        color: '#1A1613',
-        fontWeight: 500,
-        opacity: step >= 1 ? 1 : 0,
-        transition: 'opacity 0.5s cubic-bezier(0.25,1,0.5,1)',
+        position: 'absolute', top: '32px', left: '48px', fontFamily: 'Cabinet Grotesk', fontSize: '13px', 
+        letterSpacing: '0.06em', color: '#1A1613', fontWeight: 500, opacity: step >= 1 ? 1 : 0, transition: 'opacity 0.5s'
       }}>
         MJ CASA
       </div>
-
-      {/* ─── Percentage top-right ─── */}
       <div style={{
-        position: 'absolute',
-        top: '32px',
-        right: '48px',
-        fontFamily: 'Cabinet Grotesk, system-ui, sans-serif',
-        fontSize: '11px',
-        letterSpacing: '0.1em',
-        color: '#7A7066',
-        fontVariantNumeric: 'tabular-nums',
+        position: 'absolute', top: '32px', right: '48px', fontFamily: 'Cabinet Grotesk', fontSize: '11px', 
+        letterSpacing: '0.1em', color: '#7A7066', fontVariantNumeric: 'tabular-nums'
       }}>
         {String(progress).padStart(2, '0')}%
       </div>
 
-      {/* ─── Floating left image card ─── */}
+      {/* ─── 1. Bottom Left: 150% ─── */}
       <div style={{
         position: 'absolute',
-        bottom: 'clamp(160px, 20vw, 220px)',
-        left: 'clamp(24px, 5vw, 64px)',
-        width: 'clamp(100px, 12vw, 160px)',
+        bottom: '22%',
+        left: '7%',
+        width: 'clamp(120px, 15vw, 220px)', // 150% basis
         opacity: step >= 1 ? 1 : 0,
-        transform: step >= 1 ? 'translateY(0)' : 'translateY(24px)',
-        transition: 'opacity 0.6s 0.1s cubic-bezier(0.25,1,0.5,1), transform 0.6s 0.1s cubic-bezier(0.25,1,0.5,1)',
+        transform: step >= 1 ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'opacity 0.8s 0.1s cubic-bezier(0.25,1,0.5,1), transform 0.8s 0.1s cubic-bezier(0.25,1,0.5,1)',
+        zIndex: 2
       }}>
-        <img
-          src={PREVIEW_IMAGES[0]}
-          alt="preview"
-          style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', borderRadius: '4px' }}
-        />
-        <div style={{
-          marginTop: '8px',
-          fontFamily: 'Cabinet Grotesk, system-ui, sans-serif',
-          fontSize: '9px',
-          letterSpacing: '0.16em',
-          textTransform: 'uppercase',
-          color: '#7A7066',
-        }}>
-          Interior · 台中
+        <img src={PREVIEW_IMAGES[1]} alt="150%" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: '2px' }} />
+        <div style={{ marginTop: '10px', fontFamily: 'Cabinet Grotesk', fontSize: '9px', letterSpacing: '0.1em', color: '#7A7066' }}>
+          01 / REFINE
         </div>
       </div>
 
-      {/* ─── Floating right image card ─── */}
+      {/* ─── 2. Top Right: 200% ─── */}
       <div style={{
         position: 'absolute',
-        top: 'clamp(80px, 12vw, 120px)',
-        right: 'clamp(24px, 5vw, 64px)',
-        width: 'clamp(80px, 10vw, 130px)',
+        top: '12%',
+        right: '10%',
+        width: 'clamp(160px, 20vw, 300px)', // 200% basis
         opacity: step >= 1 ? 1 : 0,
-        transform: step >= 1 ? 'translateY(0)' : 'translateY(-20px)',
-        transition: 'opacity 0.6s 0.22s cubic-bezier(0.25,1,0.5,1), transform 0.6s 0.22s cubic-bezier(0.25,1,0.5,1)',
+        transform: step >= 1 ? 'translateY(0)' : 'translateY(-30px)',
+        transition: 'opacity 0.8s 0.25s cubic-bezier(0.25,1,0.5,1), transform 0.8s 0.25s cubic-bezier(0.25,1,0.5,1)',
+        zIndex: 2
       }}>
-        <img
-          src={PREVIEW_IMAGES[1]}
-          alt="preview"
-          style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', borderRadius: '4px' }}
-        />
-        <div style={{
-          marginTop: '8px',
-          fontFamily: 'Cabinet Grotesk, system-ui, sans-serif',
-          fontSize: '9px',
-          letterSpacing: '0.16em',
-          textTransform: 'uppercase',
-          color: '#7A7066',
-          textAlign: 'right',
-        }}>
-          Space →
+        <img src={PREVIEW_IMAGES[0]} alt="200%" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', borderRadius: '2px' }} />
+        <div style={{ marginTop: '10px', fontFamily: 'Cabinet Grotesk', fontSize: '10px', letterSpacing: '0.1em', color: '#7A7066', textAlign: 'right' }}>
+          ESTABLISHED · 2024
+        </div>
+      </div>
+
+      {/* ─── 3. Center Right Huge: 300% ─── */}
+      <div style={{
+        position: 'absolute',
+        top: '45%',
+        right: '25%',
+        width: 'clamp(240px, 30vw, 450px)', // 300% basis
+        opacity: step >= 1 ? 0.9 : 0,
+        transform: step >= 1 ? 'scale(1) translateX(0)' : 'scale(1.05) translateX(20px)',
+        transition: 'opacity 1s 0.4s cubic-bezier(0.25,1,0.5,1), transform 1.2s 0.4s cubic-bezier(0.25,1,0.5,1)',
+        zIndex: 1
+      }}>
+        <img src={PREVIEW_IMAGES[2]} alt="300%" style={{ width: '100%', aspectRatio: '3/2', objectFit: 'cover', borderRadius: '2px' }} />
+        <div style={{ marginTop: '12px', fontFamily: 'Cabinet Grotesk', fontSize: '11px', fontWeight: 500, color: '#1A1613', letterSpacing: '0.05em' }}>
+          CRAFTED BY NATURE
         </div>
       </div>
 
       {/* ─── Center tagline ─── */}
       <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        textAlign: 'center',
-        whiteSpace: 'nowrap',
-        opacity: step >= 1 ? 1 : 0,
-        transition: 'opacity 0.6s 0.15s cubic-bezier(0.25,1,0.5,1)',
-        zIndex: 2,
+        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+        textAlign: 'center', opacity: step >= 1 ? 1 : 0, transition: 'opacity 0.8s 0.2s', zIndex: 10
       }}>
-        <div style={{
-          fontFamily: 'Cabinet Grotesk, system-ui, sans-serif',
-          fontSize: 'clamp(14px, 1.8vw, 22px)',
-          letterSpacing: '0.05em',
-          color: '#1A1613',
-          fontWeight: 400,
-        }}>
-          Natural. Refined. Yours.
+        <div style={{ fontFamily: 'Cabinet Grotesk', fontSize: 'clamp(16px, 2vw, 24px)', letterSpacing: '0.05em', color: '#1A1613' }}>
+          Living with Intent
         </div>
-        <div style={{
-          marginTop: '10px',
-          height: '1px',
-          width: '40px',
-          background: '#C9A97A',
-          margin: '10px auto 0',
-        }} />
+        <div style={{ marginTop: '12px', height: '1px', width: '40px', background: '#C9A97A', margin: '0 auto' }} />
       </div>
 
-      {/* ─── Big brand wordmark — slides up from bottom ─── */}
+      {/* ─── Big brand wordmark ─── */}
       <div style={{
-        position: 'absolute',
-        bottom: '-0.12em',      // slightly crop the bottom like reference
-        left: 0,
-        right: 0,
-        paddingLeft: 'clamp(16px, 3vw, 48px)',
-        paddingRight: 'clamp(16px, 3vw, 48px)',
-        lineHeight: 0.85,
-        overflow: 'hidden',
-        zIndex: 1,
+        position: 'absolute', bottom: '-0.12em', left: 0, right: 0, padding: '0 clamp(16px, 3vw, 48px)',
+        lineHeight: 0.85, overflow: 'hidden', zIndex: 15, pointerEvents: 'none'
       }}>
-        <div
-          style={{
-            fontFamily: 'Cabinet Grotesk, system-ui, sans-serif',
-            fontWeight: 700,
-            fontSize: 'clamp(72px, 14vw, 220px)',
-            letterSpacing: '-0.02em',
-            color: '#1A1613',
-            whiteSpace: 'nowrap',
-            display: 'flex',
-            alignItems: 'baseline',
-            gap: '0.05em',
-            transform: step >= 2 ? 'translateY(0)' : 'translateY(110%)',
-            opacity: step >= 2 ? 1 : 0,
-            transition: step >= 2
-              ? 'transform 0.75s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease-out'
-              : 'none',
-          }}
-        >
+        <div style={{
+          fontFamily: 'Cabinet Grotesk', fontWeight: 700, fontSize: 'clamp(72px, 14vw, 220px)',
+          letterSpacing: '-0.02em', color: '#1A1613', whiteSpace: 'nowrap', display: 'flex', alignItems: 'baseline', gap: '0.05em',
+          transform: step >= 2 ? 'translateY(0)' : 'translateY(110%)', opacity: step >= 2 ? 1 : 0,
+          transition: step >= 2 ? 'transform 0.9s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease-out' : 'none',
+        }}>
           <span>MJ</span>
           <span style={{ color: '#C9A97A', letterSpacing: '0' }}>&nbsp;</span>
           <span>CASA</span>
