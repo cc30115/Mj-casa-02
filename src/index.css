@@ -1,0 +1,136 @@
+@import "tailwindcss";
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@100,200,300,400,500,700,900&display=swap');
+
+@layer base {
+  :root {
+    --bg: #EFEAE3;
+    --paper: #F4EFE8;
+    --ink: #1A1613;
+    --ink-2: #3C342E;
+    --muted: #7A7066;
+    --rule: #D9D1C5;
+    --dark: #2A211C;
+    --dark-2: #1A1411;
+    --accent: #8A6A4A;
+    --px: 56px; /* Dynamic padding variable for RWD */
+  }
+
+  @media (max-width: 768px) {
+    :root {
+      --px: 24px;
+    }
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  /* -------- MICRO-ANIMATIONS (HOVER) -------- */
+  .hover-line {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .hover-line::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: currentColor;
+    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .hover-line:hover::after {
+    width: 100%;
+  }
+
+  /* -------- NAV -------- */
+  .nav-booking {
+    @apply bg-white text-[var(--ink)] px-6 py-2.5 rounded text-[11px] font-semibold tracking-[0.1em] uppercase cursor-pointer transition-all duration-300;
+  }
+  .nav-booking:hover {
+    @apply bg-[var(--accent)] text-white;
+  }
+
+  /* Language Dropdown */
+  .lang-wrapper { position: relative; padding: 10px 0; margin: -10px 0; display: flex; align-items: center;}
+  .lang-dropdown { position: absolute; top: 100%; right: -10px; background: #fff; color: var(--ink); padding: 12px 16px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); opacity: 0; visibility: hidden; transition: opacity 0.3s, transform 0.3s, visibility 0.3s; transform: translateY(10px); display: flex; flex-direction: column; gap: 10px; min-width: 100px; z-index: 40; }
+  .lang-wrapper:hover .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+  .lang-dropdown a { color: var(--ink-2); font-size: 12px; font-weight: 500; letter-spacing: 0.05em; transition: color 0.2s; white-space: nowrap; }
+  .lang-dropdown a:hover { color: var(--accent); }
+
+  /* -------- AUTH LIGHTBOX (MODAL) -------- */
+  .auth-field { @apply w-full bg-transparent border-none border-b border-[var(--rule)] p-3.5 text-[13px] font-[inherit] text-[var(--ink)] outline-none transition-colors duration-200; }
+  .auth-field:focus { border-color: var(--ink); }
+  .auth-field::placeholder { color: var(--muted); letter-spacing: 0.05em; }
+
+  /* -------- Carousel hidden scrollbar -------- */
+  .hide-scrollbar {
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Placeholders */
+  .ph { width: 100%; height: 100%; background: repeating-linear-gradient(135deg, rgba(0,0,0,.04) 0 8px, transparent 8px 16px), linear-gradient(180deg,#D8CDB9 0%,#B39D7F 100%); display: grid; place-items: center; color: rgba(30,25,22,.45); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; text-align: center; padding: 20px; }
+  .ph.dark { background: repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 8px, transparent 8px 16px), linear-gradient(180deg,#3A2C22 0%,#1F1611 100%); color: rgba(240,230,215,.45); }
+  .ph.cool { background: repeating-linear-gradient(135deg, rgba(0,0,0,.04) 0 8px, transparent 8px 16px), linear-gradient(180deg,#E6DED0 0%,#C8BCA5 100%); color: rgba(30,25,22,.4); }
+  .ph.paper { background: repeating-linear-gradient(135deg, rgba(0,0,0,.03) 0 8px, transparent 8px 16px), #ECE6DB; color: rgba(30,25,22,.35); }
+  .ph.warm { background: repeating-linear-gradient(135deg, rgba(0,0,0,.04) 0 8px, transparent 8px 16px), linear-gradient(180deg,#A86844 0%,#6B3B22 100%); color: rgba(255,245,230,.5); }
+
+  /* Leaflet Map Monochromatic Beige Filter styling */
+  .leaflet-tile-pane {
+    filter: sepia(0.3) contrast(1.1) brightness(0.9);
+    mix-blend-mode: multiply;
+    opacity: 0.85;
+  }
+  .leaflet-control-attribution {
+    background: transparent !important;
+    color: var(--muted) !important;
+    font-size: 9px !important;
+  }
+  .leaflet-control-attribution a {
+    color: var(--ink) !important;
+  }
+  /* Custom Map Marker */
+  .custom-map-marker div {
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .custom-map-marker div:hover {
+    transform: scale(1.2);
+  }
+
+  /* Interaction Pin */
+  .pin { position: absolute; display: inline-flex; align-items: center; gap: 8px; color: #fff; font-size: 12px; letter-spacing: .01em; background: rgba(20,15,12,.3); backdrop-filter: blur(6px); padding: 8px 14px; border-radius: 4px; border: 1px solid rgba(255,255,255,.2); z-index: 5; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), letter-spacing 0.3s ease, background 0.3s ease; cursor: pointer; }
+  .pin:hover { transform: scale(1.03); letter-spacing: 0.05em; background: rgba(20,15,12,.6); }
+  .pin i { width: 8px; height: 8px; border-radius: 50%; border: 1px solid #fff; transition: transform 0.3s ease; }
+  .pin:hover i { transform: scale(1.2); }
+
+  @media (max-width: 480px) {
+    .pin {
+      transform: scale(0.85);
+    }
+    .pin:hover {
+      transform: scale(0.9);
+    }
+  }
+
+  /* About Slider text crossfade */
+  .about-slide-text {
+    transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                filter 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+}
