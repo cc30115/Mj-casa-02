@@ -78,14 +78,14 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         {String(progress).padStart(2, '0')}%
       </div>
 
-      {/* ─── 1. Bottom Left: 150% ─── */}
+      {/* ─── 1. Top Left: 150% Square ─── */}
       <div style={{
         position: 'absolute',
-        bottom: '15%',
+        top: '18%',
         left: '8%',
         width: 'clamp(120px, 15vw, 220px)', // 150% basis
         opacity: step >= 1 ? 1 : 0,
-        transform: step >= 1 ? 'translateY(0)' : 'translateY(30px)',
+        transform: step >= 1 ? 'translateY(0)' : 'translateY(-20px)',
         transition: 'opacity 0.8s 0.1s cubic-bezier(0.25,1,0.5,1), transform 0.8s 0.1s cubic-bezier(0.25,1,0.5,1)',
         zIndex: 2
       }}>
@@ -95,28 +95,28 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         </div>
       </div>
 
-      {/* ─── 2. Top Right: 200% ─── */}
+      {/* ─── 2. Mid Left: 200% Portrait ─── */}
       <div style={{
         position: 'absolute',
-        top: '15%',
-        right: '8%',
-        width: 'clamp(160px, 20vw, 300px)', // 200% basis
+        bottom: '32%',
+        left: '15%',
+        width: 'clamp(150px, 18vw, 280px)', // 200% basis
         opacity: step >= 1 ? 1 : 0,
-        transform: step >= 1 ? 'translateY(0)' : 'translateY(-30px)',
+        transform: step >= 1 ? 'translateX(0)' : 'translateX(-30px)',
         transition: 'opacity 0.8s 0.25s cubic-bezier(0.25,1,0.5,1), transform 0.8s 0.25s cubic-bezier(0.25,1,0.5,1)',
         zIndex: 2
       }}>
         <img src={PREVIEW_IMAGES[0]} alt="200%" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', borderRadius: '2px' }} />
-        <div style={{ marginTop: '10px', fontSize: '10px', letterSpacing: '0.1em', color: '#7A7066', textAlign: 'right', fontWeight: 500 }}>
+        <div style={{ marginTop: '10px', fontSize: '10px', letterSpacing: '0.1em', color: '#7A7066', fontWeight: 500 }}>
           ESTABLISHED · 2024
         </div>
       </div>
 
-      {/* ─── 3. Center Right Huge: 300% ─── */}
+      {/* ─── 3. Top Right: 300% Landscape ─── */}
       <div style={{
         position: 'absolute',
-        top: '40%',
-        right: '12%',
+        top: '15%',
+        right: '8%',
         width: 'clamp(240px, 30vw, 450px)', // 300% basis
         opacity: step >= 1 ? 0.95 : 0,
         transform: step >= 1 ? 'scale(1) translateX(0)' : 'scale(1.05) translateX(20px)',
@@ -124,7 +124,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         zIndex: 1
       }}>
         <img src={PREVIEW_IMAGES[2]} alt="300%" style={{ width: '100%', aspectRatio: '3/2', objectFit: 'cover', borderRadius: '2px' }} />
-        <div style={{ marginTop: '12px', fontSize: '11px', fontWeight: 600, color: '#1A1613', letterSpacing: '0.05em' }}>
+        <div style={{ marginTop: '12px', fontSize: '11px', fontWeight: 600, color: '#1A1613', letterSpacing: '0.05em', textAlign: 'right' }}>
           CRAFTED BY NATURE
         </div>
       </div>
