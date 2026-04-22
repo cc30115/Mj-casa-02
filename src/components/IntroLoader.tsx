@@ -56,23 +56,24 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         pointerEvents: 'all',
         transform: exiting ? 'translateY(-100%)' : 'translateY(0)',
         transition: exiting ? 'transform 1.2s cubic-bezier(0.76,0,0.24,1)' : 'none',
+        fontFamily: "'Cabinet Grotesk', system-ui, sans-serif",
       }}
     >
       {/* ─── Top progress bar ─── */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: 'rgba(0,0,0,0.08)' }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'rgba(0,0,0,0.06)' }}>
         <div style={{ height: '100%', width: `${progress}%`, background: '#1A1613', transition: 'width 0.08s linear' }} />
       </div>
 
       {/* ─── Nav placeholders ─── */}
       <div style={{
-        position: 'absolute', top: '32px', left: '48px', fontFamily: 'Cabinet Grotesk', fontSize: '13px', 
-        letterSpacing: '0.06em', color: '#1A1613', fontWeight: 500, opacity: step >= 1 ? 1 : 0, transition: 'opacity 0.5s'
+        position: 'absolute', top: '32px', left: '48px', fontSize: '14px', 
+        letterSpacing: '0.06em', color: '#1A1613', fontWeight: 600, opacity: step >= 1 ? 1 : 0, transition: 'opacity 0.5s'
       }}>
         MJ CASA
       </div>
       <div style={{
-        position: 'absolute', top: '32px', right: '48px', fontFamily: 'Cabinet Grotesk', fontSize: '11px', 
-        letterSpacing: '0.1em', color: '#7A7066', fontVariantNumeric: 'tabular-nums'
+        position: 'absolute', top: '32px', right: '48px', fontSize: '13px', 
+        letterSpacing: '0.1em', color: '#1A1613', fontWeight: 500, fontVariantNumeric: 'tabular-nums'
       }}>
         {String(progress).padStart(2, '0')}%
       </div>
@@ -80,8 +81,8 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
       {/* ─── 1. Bottom Left: 150% ─── */}
       <div style={{
         position: 'absolute',
-        bottom: '22%',
-        left: '7%',
+        bottom: '15%',
+        left: '8%',
         width: 'clamp(120px, 15vw, 220px)', // 150% basis
         opacity: step >= 1 ? 1 : 0,
         transform: step >= 1 ? 'translateY(0)' : 'translateY(30px)',
@@ -89,7 +90,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         zIndex: 2
       }}>
         <img src={PREVIEW_IMAGES[1]} alt="150%" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: '2px' }} />
-        <div style={{ marginTop: '10px', fontFamily: 'Cabinet Grotesk', fontSize: '9px', letterSpacing: '0.1em', color: '#7A7066' }}>
+        <div style={{ marginTop: '10px', fontSize: '9px', letterSpacing: '0.1em', color: '#7A7066', fontWeight: 500 }}>
           01 / REFINE
         </div>
       </div>
@@ -97,8 +98,8 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
       {/* ─── 2. Top Right: 200% ─── */}
       <div style={{
         position: 'absolute',
-        top: '12%',
-        right: '10%',
+        top: '15%',
+        right: '8%',
         width: 'clamp(160px, 20vw, 300px)', // 200% basis
         opacity: step >= 1 ? 1 : 0,
         transform: step >= 1 ? 'translateY(0)' : 'translateY(-30px)',
@@ -106,7 +107,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         zIndex: 2
       }}>
         <img src={PREVIEW_IMAGES[0]} alt="200%" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', borderRadius: '2px' }} />
-        <div style={{ marginTop: '10px', fontFamily: 'Cabinet Grotesk', fontSize: '10px', letterSpacing: '0.1em', color: '#7A7066', textAlign: 'right' }}>
+        <div style={{ marginTop: '10px', fontSize: '10px', letterSpacing: '0.1em', color: '#7A7066', textAlign: 'right', fontWeight: 500 }}>
           ESTABLISHED · 2024
         </div>
       </div>
@@ -114,16 +115,16 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
       {/* ─── 3. Center Right Huge: 300% ─── */}
       <div style={{
         position: 'absolute',
-        top: '45%',
-        right: '25%',
+        top: '40%',
+        right: '12%',
         width: 'clamp(240px, 30vw, 450px)', // 300% basis
-        opacity: step >= 1 ? 0.9 : 0,
+        opacity: step >= 1 ? 0.95 : 0,
         transform: step >= 1 ? 'scale(1) translateX(0)' : 'scale(1.05) translateX(20px)',
         transition: 'opacity 1s 0.4s cubic-bezier(0.25,1,0.5,1), transform 1.2s 0.4s cubic-bezier(0.25,1,0.5,1)',
         zIndex: 1
       }}>
         <img src={PREVIEW_IMAGES[2]} alt="300%" style={{ width: '100%', aspectRatio: '3/2', objectFit: 'cover', borderRadius: '2px' }} />
-        <div style={{ marginTop: '12px', fontFamily: 'Cabinet Grotesk', fontSize: '11px', fontWeight: 500, color: '#1A1613', letterSpacing: '0.05em' }}>
+        <div style={{ marginTop: '12px', fontSize: '11px', fontWeight: 600, color: '#1A1613', letterSpacing: '0.05em' }}>
           CRAFTED BY NATURE
         </div>
       </div>
@@ -133,10 +134,10 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
         textAlign: 'center', opacity: step >= 1 ? 1 : 0, transition: 'opacity 0.8s 0.2s', zIndex: 10
       }}>
-        <div style={{ fontFamily: 'Cabinet Grotesk', fontSize: 'clamp(16px, 2vw, 24px)', letterSpacing: '0.05em', color: '#1A1613' }}>
+        <div style={{ fontSize: 'clamp(18px, 2.5vw, 24px)', letterSpacing: '0.05em', color: '#1A1613', fontWeight: 500 }}>
           Living with Intent
         </div>
-        <div style={{ marginTop: '12px', height: '1px', width: '40px', background: '#C9A97A', margin: '0 auto' }} />
+        <div style={{ marginTop: '12px', height: '1.5px', width: '48px', background: '#C9A97A', margin: '0 auto' }} />
       </div>
 
       {/* ─── Big brand wordmark ─── */}
@@ -145,7 +146,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         lineHeight: 0.85, overflow: 'hidden', zIndex: 15, pointerEvents: 'none'
       }}>
         <div style={{
-          fontFamily: 'Cabinet Grotesk', fontWeight: 700, fontSize: 'clamp(72px, 14vw, 220px)',
+          fontWeight: 700, fontSize: 'clamp(72px, 14vw, 220px)',
           letterSpacing: '-0.02em', color: '#1A1613', whiteSpace: 'nowrap', display: 'flex', alignItems: 'baseline', gap: '0.05em',
           transform: step >= 2 ? 'translateY(0)' : 'translateY(110%)', opacity: step >= 2 ? 1 : 0,
           transition: step >= 2 ? 'transform 0.9s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease-out' : 'none',
