@@ -18,7 +18,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
   // step 3 = exit (curtain lifts)
   const rafRef = useRef<number | null>(null);
   const startRef = useRef<number | null>(null);
-  const DURATION = 2000;
+  const DURATION = 4000;
 
   useEffect(() => {
     const animate = (now: number) => {
@@ -33,10 +33,10 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
       } else {
         setProgress(100);
         // sequence of reveals
-        setTimeout(() => setStep(1), 200);   // cards fade in
-        setTimeout(() => setStep(2), 500);   // big brand text slides up
-        setTimeout(() => setStep(3), 1400);  // exit
-        setTimeout(onComplete, 2050);
+        setTimeout(() => setStep(1), 400);   // cards fade in
+        setTimeout(() => setStep(2), 1000);  // big brand text slides up
+        setTimeout(() => setStep(3), 3000);  // exit (curtain lift)
+        setTimeout(onComplete, 4200);        // wait for 1.2s transition
       }
     };
     rafRef.current = requestAnimationFrame(animate);
@@ -57,7 +57,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         // curtain lifts up on exit
         transform: exiting ? 'translateY(-100%)' : 'translateY(0)',
         transition: exiting
-          ? 'transform 0.65s cubic-bezier(0.76,0,0.24,1)'
+          ? 'transform 1.2s cubic-bezier(0.76,0,0.24,1)'
           : 'none',
       }}
     >
